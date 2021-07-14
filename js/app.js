@@ -59,10 +59,23 @@ qwerty.addEventListener('click', (e)=>{
             missed += 1;
         }
     }
+    checkWin();
 })
 
 function checkWin(){
-
+    //number of letters with the class show
+    //number of letters
+    let letters = document.querySelectorAll('.letter')
+    let shownLetters = document.querySelectorAll('.show');
+    if (letters.length === shownLetters.length){
+        //show win overlay
+        document.getElementById('overlay').style.display = 'flex';
+        document.getElementById('overlay').classList.add('win');
+    } else if (missed >= 5){
+        //show lose overlay
+        document.getElementById('overlay').style.display = 'flex';
+        document.getElementById('overlay').classList.add('lose');
+    }
 }
 
 addPhraseToDisplay(getRandomPhraseAsArray(phrases))
