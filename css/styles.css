@@ -1,6 +1,7 @@
 /* Main styles */
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700&Roboto:300');
 
+
 /* Variables */
 
 :root {
@@ -27,6 +28,9 @@ body {
   flex-direction: column;
   display: flex;
   height: 100vh;
+  user-select:none;
+  -moz-user-select: none;
+  -webkit-user-select:none;
 }
 
 li, ol, ul {
