@@ -1,11 +1,10 @@
 let qwerty = document.getElementById('qwerty');
 let phrase = document.getElementById('phrase');
-
-let missed = 0;
-
 let start_button = document.querySelector('.btn__reset');
+let missed = 0;
 start_button.addEventListener('click',() => {
     document.getElementById('overlay').style.display = 'none';
+    newGame();
 })
 
 let phrases = [
@@ -57,6 +56,7 @@ qwerty.addEventListener('click', (e)=>{
         let letterFound = checkLetter(e.target);
         if (letterFound === null){
             missed += 1;
+            document.querySelector('.tries').remove();
         }
     }
     checkWin();
@@ -70,12 +70,33 @@ function checkWin(){
     if (letters.length === shownLetters.length){
         //show win overlay
         document.getElementById('overlay').style.display = 'flex';
-        document.getElementById('overlay').classList.add('win');
+        document.querySelector(".title").innerHTML = "Great job, you got it!";
+        document.getElementById('overlay').className = "win";
+        start_button.innerHTML = "Play Again?";
     } else if (missed >= 5){
         //show lose overlay
         document.getElementById('overlay').style.display = 'flex';
-        document.getElementById('overlay').classList.add('lose');
+        document.querySelector(".title").innerHTML = "Oops! Didn't quite get there.";
+        document.getElementById('overlay').className = "lose";
+        start_button.innerHTML = "Play Again?";
     }
 }
 
-addPhraseToDisplay(getRandomPhraseAsArray(phrases))
+function newGame(){
+    //reset hearts
+    missed = 0;
+    document.querySelector('#scoreboard ol').innerHTML = '<li class="tries"><img src="images/liveHeart.png" height="35px" width="30px"></li><li class="tries"><img src="images/liveHeart.png" height="35px" width="30px"></li><li class="tries"><img src="images/liveHeart.png" height="35px" width="30px"></li><li class="tries"><img src="images/liveHeart.png" height="35px" width="30px"></li><li class="tries"><img src="images/liveHeart.png" height="35px" width="30px"></li>'
+
+    //clear the phrase
+    document.querySelector('#phrase ul').innerHTML = "";
+
+    //reset the keyboard
+    let keys = document.querySelectorAll('#qwerty button');
+    for (let i=0; i<keys.length; i++){
+        keys[i].disabled = false;
+        keys[i].classList.remove('chosen');
+    }
+
+    //new phrase
+    addPhraseToDisplay(getRandomPhraseAsArray(phrases))
+}
